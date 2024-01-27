@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 type Props = {};
 
 const NavBar = (props: Props) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const Links = [
     {
       id: 1,
@@ -33,21 +33,26 @@ const NavBar = (props: Props) => {
     setOpen(!open);
   };
   return (
-    <div>
-      <nav className="bg-gray-200 dark:bg-black py-4 border-b-2 border-black flex items-center justify-end">
+    <>
+      <nav
+        className={`bg-gray-200 dark:bg-black py-4 border-b-2 border-black flex items-center lg:justify-between justify-between`}
+      >
+        <h2 className="px-3 text-3xl text-orange-500 cursor-pointer">
+          {"<DevBlog/>"}
+        </h2>
         <ul
-          className={`lg:flex items-start justify-end gap-4 mx-2 absolute top-0 left-[50%] -right-1  w-[full] h-full py-3 [&_li]:py-3 [&_li]:px-10 border-2 lg:border-0 bg-gray-500 dark:text-black
+          className={`lg:flex items-start justify-end gap-4 lg:gap-2 mx-2 absolute top-0  -right-1  w-60 h-full py-3 [&_li]:py-3 [&_li]:px-10 lg:[&_li]:-px-5 border-2 lg:border-0  dark:text-white  
           ${!open ? "block" : "hidden"}`}
         >
           {Links.map((link) => (
-            <li key={link.id} className="hover:text-orange-300">
+            <li key={link.id} className="hover:text-orange-300 text-orange-500">
               <Link href={link.Link}>{link.label}</Link>
             </li>
           ))}
         </ul>
-        <button className="px-3 lg:px-0 z-40">
+        <div className="px-3 lg:px-0 z-40 absolute right-8 lg:right-0">
           <ModeToggle />
-        </button>
+        </div>
         <button
           className="lg:hidden cursor-pointer z-40 px-3"
           onClick={handleMenu}
@@ -55,7 +60,7 @@ const NavBar = (props: Props) => {
           {!open ? <Menu /> : <Menu />}
         </button>
       </nav>
-    </div>
+    </>
   );
 };
 
