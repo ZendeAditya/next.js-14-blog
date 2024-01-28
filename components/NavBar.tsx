@@ -2,7 +2,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { ModeToggle } from "./DarkMode";
-import { Menu, X } from "lucide-react";
+import { Menu, Pencil, X } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
 type Props = {};
 
 const NavBar = (props: Props) => {
@@ -50,8 +51,10 @@ const NavBar = (props: Props) => {
             </li>
           ))}
         </ul>
-        <div className="px-3 lg:px-0 z-40 absolute right-8 lg:right-0">
+        <div className="px-3 lg:px-0 z-40 absolute right-8 lg:right-0 flex items-center gap-2">
           <ModeToggle />
+          <UserButton afterSignOutUrl="/" />
+          <Pencil className="w-6 h-6 cursor-pointer" />
         </div>
         <button
           className="lg:hidden cursor-pointer z-40 px-3"
