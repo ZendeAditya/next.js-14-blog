@@ -2,26 +2,34 @@
 import React, { useState, useRef, useMemo, FormEvent } from "react";
 import JoditEditor from "jodit-react";
 import { ArrowLeft } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 type Props = {};
+const JoditEditors = dynamic(() => import("jodit-react"), { ssr: false });
 
 const EditorPage = () => {
   const editor = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  console.log("title", title, "content", content);
+  const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://127.0.0.1:3000/api/blog", {
+      const res = await fetch("/api/blog", {
         method: "POST",
         headers: {
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ title, content }),
       });
+      if (!res.ok) {
+        console.log("Something went wrong!", res.statusText);
+      }
+      router.push("/");
     } catch (error) {
-      throw new Error("Faild to publish blog");
+      console.log("Failed to publish blog", error);
     }
   };
   return (
@@ -33,7 +41,7 @@ const EditorPage = () => {
           </button>
         </Link>
         <h2 className="text-2xl p-2">Write Your Story</h2>
-        <form action="post" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="text"
@@ -53,11 +61,12 @@ const EditorPage = () => {
             onChange={(newContent) => setContent(newContent)}
             className="dark:text-black"
           />
-          <input
+          <button
             type="submit"
-            value="Publish"
             className="py-2 px-10 cursor-pointer rounded-md bg-green-400 m-2"
-          />
+          >
+            Publish
+          </button>
         </form>
       </section>
     </>
