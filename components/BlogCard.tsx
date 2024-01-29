@@ -1,24 +1,28 @@
 import React from "react";
 
 type Props = {};
-
-const BlogCard = (props: Props) => {
+const getallblogs = async () => {
+  const res = await fetch("http://localhost:3000/api/blog", {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  console.log(data.allblogs);
+  return data.allblogs;
+};
+const BlogCard = async (props: Props) => {
+  const data = await getallblogs();
+  console.log(data);
   return (
-    <section className="z-40">
-      <div className="bg-white border-2 md:w-[32rem] md:h-80 w-[28rem] h-80 ms-3 rounded-lga group shadow-lg m-2">
-        <div className="bg-[url('https://images.ctfassets.net/c63hsprlvlya/IacLLeOBR5WCvdCPqKuff/6860b5cc464c4f54703a2befa3f706b4/nextjs3.webp')] bg-center relative w-full h-full object-cover overflow-hidden ">
-          <div className="absolute bottom-0">
-            <p className="text-orange-400 line-clamp-2">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam
-              sunt repellat magnam! Corrupti suscipit in esse ea accusamus totam
-              quasi dignissimos vel nisi, tempora asperiores quos sapiente ullam
-              perspiciatis sint?
-            </p>
-            <button className="py-2 px-6 border-2 m-2 rounded-md bg-green-400 border-none">
-              Read More
-            </button>
+    <section>
+      <div>
+        {data.map((data: any) => (
+          <div key={data._id}>
+            <p>{data._id}</p>
+            <p>{data.title}</p>
+            <p>{data.content}</p>
+            <p>{data.slug}</p>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );

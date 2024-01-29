@@ -28,6 +28,7 @@ const EditorPage = () => {
         console.log("Something went wrong!", res.statusText);
       }
       router.push("/");
+      router.refresh();
     } catch (error) {
       console.log("Failed to publish blog", error);
     }
