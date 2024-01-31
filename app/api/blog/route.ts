@@ -15,7 +15,7 @@ export const POST = async (req: any) => {
   try {
     await connectdb();
     const { title, content } = await req.json();
-    // console.log("title route", title, "content route", content);
+    console.log("title route", title, "content route", content);
     const blog = await Blog.create({ title, content });
     return NextResponse.json({ blog });
   } catch (error) {

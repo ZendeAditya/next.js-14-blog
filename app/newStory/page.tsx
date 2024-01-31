@@ -12,7 +12,6 @@ const EditorPage = () => {
   const editor = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  console.log("title", title, "content", content);
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 type Props = {};
@@ -9,18 +10,27 @@ const getallblogs = async () => {
   console.log(data.allblogs);
   return data.allblogs;
 };
+
 const BlogCard = async (props: Props) => {
   const data = await getallblogs();
-  console.log(data);
   return (
     <section>
-      <div>
+      <div className="overflow-hidden">
         {data.map((data: any) => (
-          <div key={data._id}>
-            <p>{data._id}</p>
-            <p>{data.title}</p>
-            <p>{data.content}</p>
-            <p>{data.slug}</p>
+          <div
+            key={data._id}
+            className="minw border-2 p-3 mx-4 mt-2 rounded-lg"
+          >
+            <h1 className="text-xl font-semibold py-2">{data.title}</h1>
+            <p
+            className="py-2 line-clamp-3"
+              dangerouslySetInnerHTML={{
+                __html: data.content,
+              }}
+            />
+            <button className="py-3 px-8 rounded-md bg-green-200 hover:bg-green-300 my-2">
+              <Link href={`${data.slug}`}>Read More</Link>
+            </button>
           </div>
         ))}
       </div>
