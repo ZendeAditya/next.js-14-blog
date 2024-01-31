@@ -22,3 +22,4 @@ export const POST = async (req: any) => {
     console.log("Failed to save the post", error);
   }
 };
+

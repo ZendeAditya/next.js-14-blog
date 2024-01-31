@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
 const getallblogs = async () => {
   const res = await fetch("http://localhost:3000/api/blog", {
     cache: "no-store",
@@ -11,7 +10,7 @@ const getallblogs = async () => {
   return data.allblogs;
 };
 
-const BlogCard = async (props: Props) => {
+const BlogCard = async () => {
   const data = await getallblogs();
   return (
     <section>
@@ -23,14 +22,17 @@ const BlogCard = async (props: Props) => {
           >
             <h1 className="text-xl font-semibold py-2">{data.title}</h1>
             <p
-            className="py-2 line-clamp-3"
+              className="py-2 line-clamp-3"
               dangerouslySetInnerHTML={{
                 __html: data.content,
               }}
             />
-            <button className="py-3 px-8 rounded-md bg-green-200 hover:bg-green-300 my-2">
-              <Link href={`${data.slug}`}>Read More</Link>
-            </button>
+            <Link
+              href={`/blog/${data.slug}`}
+              className="py-3 px-8 rounded-md bg-green-200 hover:bg-green-300 my-2"
+            >
+              Read More
+            </Link>
           </div>
         ))}
       </div>

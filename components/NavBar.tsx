@@ -4,9 +4,8 @@ import React, { useState } from "react";
 import { ModeToggle } from "./DarkMode";
 import { Menu, Pencil, X } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
-type Props = {};
 
-const NavBar = (props: Props) => {
+const NavBar = () => {
   const [open, setOpen] = useState(true);
   const Links = [
     {
@@ -34,9 +33,9 @@ const NavBar = (props: Props) => {
     setOpen(!open);
   };
   return (
-    <>
+    <header>
       <nav
-        className={`bg-gray-200 dark:bg-black py-4 border-b-2 border-black flex items-center lg:justify-between justify-between`}
+        className={`bg-gray-200 dark:bg-black py-4 border-b-2 border-black flex items-center lg:justify-between justify-between sticky top-0 `}
       >
         <h2 className="px-3 text-3xl text-orange-500 cursor-pointer">
           {"<DevBlog/>"}
@@ -65,7 +64,7 @@ const NavBar = (props: Props) => {
           {!open ? <Menu /> : <Menu />}
         </button>
       </nav>
-    </>
+    </header>
   );
 };
 
