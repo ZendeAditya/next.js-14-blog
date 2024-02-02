@@ -1,10 +1,11 @@
 import { connectdb } from "@/lib/connectdb";
+import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-export const POST = async (req: any) => {
+export const GET = async (req: NextApiRequest) => {
   try {
     await connectdb();
-    const slug = await req.json();
+    const slug = req.query;
     console.log("slug", slug);
     return NextResponse.json({ slug: slug });
   } catch (error) {

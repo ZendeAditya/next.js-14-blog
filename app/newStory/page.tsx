@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useRef, useMemo, FormEvent } from "react";
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  FormEvent,
+  ChangeEvent,
+} from "react";
 import JoditEditor from "jodit-react";
 import { ArrowLeft } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -9,10 +15,24 @@ type Props = {};
 const JoditEditors = dynamic(() => import("jodit-react"), { ssr: false });
 
 const EditorPage = () => {
+  const [selectedImage, setSelectedImage] = useState<String | null>(null);
   const editor = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    console.log("file", file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -21,7 +41,7 @@ const EditorPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content, selectedImage }),
       });
       if (!res.ok) {
         console.log("Something went wrong!", res.statusText);
@@ -42,6 +62,13 @@ const EditorPage = () => {
         </Link>
         <h2 className="text-2xl p-2">Write Your Story</h2>
         <form onSubmit={handleSubmit}>
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*" // Specify accepted file types (images in this case)
+            onChange={handleImageChange}
+            className="py-2 px-8 border-2 w-full rounded-lg"
+          />
           <input
             type="text"
             name="text"

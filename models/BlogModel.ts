@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import slugify from "slugify";
 const BlogSchema = new Schema(
   {
+    coverImg: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

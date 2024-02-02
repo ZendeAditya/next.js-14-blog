@@ -14,12 +14,10 @@ export const GET = async () => {
 export const POST = async (req: any) => {
   try {
     await connectdb();
-    const { title, content } = await req.json();
-    console.log("title route", title, "content route", content);
-    const blog = await Blog.create({ title, content });
+    const { title, content, selectedImage } = await req.json();
+    const blog = await Blog.create({ coverImg: selectedImage, title, content });
     return NextResponse.json({ blog });
   } catch (error) {
     console.log("Failed to save the post", error);
   }
 };
-
