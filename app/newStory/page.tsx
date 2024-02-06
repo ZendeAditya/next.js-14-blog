@@ -11,7 +11,6 @@ import { ArrowLeft } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-type Props = {};
 const JoditEditors = dynamic(() => import("jodit-react"), { ssr: false });
 
 const EditorPage = () => {
@@ -20,7 +19,6 @@ const EditorPage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
-
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     console.log("file", file);
