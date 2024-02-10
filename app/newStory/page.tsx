@@ -12,13 +12,15 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 const JoditEditors = dynamic(() => import("jodit-react"), { ssr: false });
-
+import { useAuth } from "@clerk/nextjs";
 const EditorPage = () => {
   const [selectedImage, setSelectedImage] = useState<String | null>(null);
   const editor = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  console.log(userId);
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     console.log("file", file);
@@ -39,7 +41,7 @@ const EditorPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, content, selectedImage }),
+        body: JSON.stringify({ title, content, selectedImage, userId }),
       });
       if (!res.ok) {
         console.log("Something went wrong!", res.statusText);
